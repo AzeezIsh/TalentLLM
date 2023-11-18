@@ -2,7 +2,7 @@ import gspread
 import os,random
 from Candidate import JobCandidate
 from dotenv import load_dotenv
-from claude_compator import bubble_sort
+from compator import bubble_sort
 from results import writeToSheets
 sa = gspread.service_account(filename='service_creds.json')
 sh = sa.open("Figma_swe")

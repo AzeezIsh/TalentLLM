@@ -28,26 +28,6 @@ def chat_with_resume(model, resume_location):
         print('Response:\n' + response + '\n\n')
         chat_history += 'User:\n' + question + '\nResponse:\n' + response
 
-def inference(message, history):
-    try:
-        flattened_history = [item for sublist in history for item in sublist]
-        full_message = " ".join(flattened_history + [message])
-        messages_litellm = [{"role": "user", "content": full_message}] # litellm message format
-        partial_message = ""
-        for chunk in litellm.completion(model="huggingface/meta-llama/Llama-2-7b-chat-hf",
-                                        api_base="x.x.x.x:xxxx",
-                                        messages=messages_litellm,
-                                        max_new_tokens=512,
-                                        temperature=.7,
-                                        top_k=100,
-                                        top_p=.9,
-                                        repetition_penalty=1.18,
-                                        stream=True):
-            partial_message += chunk['choices'][0]['delta']['content'] # extract text from streamed litellm chunks
-            yield partial_message
-    except Exception as e:
-        print("Exception encountered:", str(e))
-        yield f"An Error occured please 'Clear' the error and try your question again"
 model = 'chat-bison'
 resume_location = 'resume_pdfs/1BXAuw6f1rDF05P734y_O7K8fYwgDVZvV.pdf'
 chat_with_resume(model, resume_location)

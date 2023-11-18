@@ -2,7 +2,7 @@ from github import Github,Auth
 from github.Repository import Repository
 from typing import List
 import requests
-import os, json, datetime, re
+import os, json, datetime, re,sys
 from bs4 import BeautifulSoup
 import openai
 from dotenv import load_dotenv
@@ -17,7 +17,13 @@ os.environ['PALM_API_KEY']='AIzaSyBr-t20IcF2T1xItAnlyYuQ50Ctu6Y0y4I'
 os.environ["VERTEXAI_PROJECT"] = "data-axe-386317"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'service_creds.json'
 
-
+def printc(obj, color="cyan"):
+    color_code = {
+        "black": "30", "red": "31", "green": "32", "yellow": "33",
+        "blue": "34", "magenta": "35", "cyan": "36", "white": "37"
+    }
+    colored_text = f"\033[{color_code[color]}m{obj}\033[0m" if color in color_code else obj
+    print(colored_text)
 
 
 auth = Auth.Token(os.environ.get('GH_KEY', 'default'))
@@ -79,32 +85,46 @@ def get_repositories(username: str)->List[Repository]:
 
 def getBasicReport(username: str):
     user_repos = get_repositories(username)[:8]
-    summary=""
+    summaries=[]
+
 
     for repo in user_repos:
-        summary+="\nNAME: "+str(repo.full_name)+"\nSTARS: "+str(repo.stargazers_count)+"\nReadme: \n"
+        
         try:
-            md =repo.get_contents("README.md").decoded_content
-            summary+= str(remove_html_and_urls(str(md)))
+            content = ""
+            content+="\nNAME: "+str(repo.full_name)+"\nSTARS: "+str(repo.stargazers_count)+"\nReadme: \n"
+            files = repo.get_contents("")
+            md_files = [file for file in files if file.name.endswith('.md')]
+
+    
+            md_file_content = repo.get_contents(md_files[0].path).decoded_content.decode()
+
+            content+= str(remove_html_and_urls(str(md_file_content)))
+
+
+
+            messages=[
+                {"role": "user", "content": "I want you to summarize this repository and summarize the skills gained with this repository  "},
+                {"role": "assistant", "content":         
+                    """
+                    Sure, I can help with that! Please provide me with the details for the repo and I'll be able to summarize it and outline the skills that can be gained from it.
+                    Additonally I will grade the techinal complexity with it. I will also greatly take into consideration the Number of stars. Furthermore I Will use broken english to ensure
+                    my statements are as short and concise as possible
+                    """
+                },
+                {"role": "user", "content": content}
+                ]
+
+            response =completion(model="anthropic.claude-instant-v1", messages=messages,max_tokens=150,temperature=1.0)
+            summaries.append(response["choices"][0]["message"]['content'])
 
         except:
             continue
 
 
-    text="""
-    based on these repos for this user and the contents of the readmes, 
-    provide a summary of it and an overall summary of this github user and 
-    take into consideration the technical complexity and reach of their repos
-    Note this github user asked requested for ur to review their github
-    """
-    messages=[{"role": "user", "content": text+"\n"+summary}]
-    print(messages)
-
     # message = completion(model="anthropic.claude-instant-v1", messages=messages)
-    
-    message = completion(model="chat-bison-32k", messages=messages)
 
-    return message
+    return summaries
 
 
 
@@ -112,6 +132,6 @@ def getBasicReport(username: str):
 
 
 
-print(getBasicReport(username='danikhan632'))
+print(getBasicReport(username='taliu02'))
 
 

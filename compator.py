@@ -58,7 +58,7 @@ def compare_resumes(content:str, nameA="", nameB=""):
             """
             I can assist you in evaluating two candidates based on a provided rubric. 
             Provide me with the rubric or the criteria you'd like to use for the evaluation, 
-            and I'll help you assess the candidates accordingly and explain myself in less that 50 words"
+            and I'll help you assess the candidates accordingly and explain myself in less that 50 words
             """
         },
         {"role": "user", "content": content}
