@@ -1,0 +1,39 @@
+
+ 1. Educational Background
+- Institution Classification:
+  - Elite (e.g., MIT, Stanford, Harvard)
+  - Reputable (Well-known universities with strong programs)
+  - Other (All other institutions)
+- Degree Level:
+  - PhD in Computer Science/related field
+  - Master's in Computer Science/related field
+  - Bachelor's in Computer Science/related field
+  - Other or no formal degree
+
+ 2. Work Experience (Assessed from BS Graduation Date)
+- Years of Experience Post-BS:
+  - Senior (5+ years)
+  - Mid-Level (3-5 years)
+  - Junior (1-3 years)
+  - Entry Level (Less than 1 year)
+- Previous Employers:
+  - Leading Tech Companies (e.g., Google, Apple, Facebook)
+  - Dynamic Start-ups
+  - Established Non-tech Corporates
+  - Other Sectors
+
+ 3. Project Experience
+- Project Scale and Complexity:
+  - Large-scale, High-impact Projects
+  - Mid-sized Projects
+  - Small Projects or Academic Assignments
+- Relevance to the Role:
+  - Directly Related
+  - Partially Related
+  - Unrelated
+
+ 4. Additional Contributions
+- Open-source Contributions, Research, and Personal Projects:
+  - Personal Projects
+  - Contributions to Open-source
+  - Research Publications
