@@ -6,8 +6,8 @@ from claude_compator import bubble_sort
 from results import writeToSheets
 sa = gspread.service_account(filename='service_creds.json')
 sh = sa.open("Figma_swe")
-from set_envs import set_envs
-set_envs()
+load_dotenv()
+
 wks = sh.worksheet("Sheet1")
 data = wks.get_all_values()
 
@@ -17,7 +17,9 @@ load_dotenv()
 # destination_path = os.path.join(os.getcwd(), id)
 NotList=['sasad3@gatech.edu','saad.mufti@mit.edu']
 candidates=[]
-for i in range(1, 5):
+
+os.environ['COMPARATOR_LLM']="palm/chat-bison"
+for i in range(1, 6):
     candid =JobCandidate(data[i])
     if candid.email not in NotList:
         candidates.append(candid)

@@ -1,7 +1,6 @@
 from litellm import embedding
 import os
-from set_envs import set_envs
-set_envs()
+
 
 # print(help(embedding))
 

@@ -14,11 +14,6 @@ HEADERS = {
 
 
 
-import os
-import json
-import requests
-import time
-
 def extract_text(file_path: str) -> str:
     print("Parsing resume")
     if not os.path.exists(file_path):

@@ -1,0 +1,7 @@
+litellm==1.0.0
+requests
+openai==1.0.0
+google-cloud-aiplatform
+gdown
+PyGithub
+gspread
