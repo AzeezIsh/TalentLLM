@@ -1,0 +1,174 @@
+<h1 id="daniyal-khan---portfolio">Daniyal Khan - Portfolio</h1>
+<h2 id="education">Education</h2>
+<p><strong>Georgia Institute of Technology</strong><br />
+<em>Bachelors of Science in Computer Science</em><br />
+August 2020 - December 2023</p>
+<ul>
+<li>Concentrations: Intelligence/AI and Systems and Architecture</li>
+<li>High Honours</li>
+<li>Relevant Coursework:
+<ul>
+<li>Operating Systems</li>
+<li>Artificial Intelligence</li>
+<li>Advanced Algorithms and Data Structures</li>
+<li>Robotics and Perception</li>
+<li>Computer Architecture</li>
+<li>Circuit Design Lab</li>
+</ul></li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>GitHub</strong>: <a href="https://github.com/danikhan632">danikhan632</a></li>
+<li><strong>My Resume</strong>: <a href="https://hackgtstoragebucket.s3.amazonaws.com/Resume.pdf">Resume</a></li>
+<li><strong>LinkedIn</strong>: <a href="https://www.linkedin.com/in/daniyalmkhan/">Daniyal M Khan</a></li>
+<li><strong>Email</strong>: <a href="mailto:danikhan632@gmail.com">danikhan632@gmail.com</a></li>
+</ul>
+<h2 id="vulkan-backend-for-triton-august-2023">Vulkan Backend for Triton : August 2023</h2>
+<ol type="1">
+<li>Developed Vulkan Backend for OpenAI’s Triton to enable Vulkan compatible devices utilization.</li>
+<li>Addressed Vulkan’s SPIR-V entry point and descriptor sets requirements differing from OpenCL’s SPIR-V.</li>
+<li>Proposed a modular, scalable architecture for Vulkan compute pipeline, adapting to dynamic configurations.</li>
+<li>Explored JIT compilation and code injection for Vulkan, adapting Intel’s extension approach.</li>
+<li>Created a Clang/g++ backend for dynamic C++ compilation, designed an interface for Vulkan integration.</li>
+<li>Investigated memory management solutions for Vulkan compute integration with PyTorch.</li>
+<li>Utilized MoltenVK for macOS ARM64 architecture ensuring consistent compute capabilities.</li>
+<li>Enhanced SPIRV conversion processes for better compatibility with SPIRV-Cross.</li>
+<li>Encouraged community contributions through detailed documentation and active engagement on Discord.</li>
+</ol>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/flash_attn.png" width="704"></p>
+<h2 id="guidance-api-june-2023">Guidance API: June 2023</h2>
+<ol type="1">
+<li>Developed the Guidance API, integrating advanced language model capabilities for enhanced text generation and processing.</li>
+<li>Enabled efficient network calls to Guidance, harnessing the power of cutting-edge language models for users.</li>
+<li>Introduced a comprehensive output structure, supporting multiple generations, selections, conditionals, and tool use.</li>
+<li>Optimized system performance with smart seed-based generation caching, ensuring efficient token storage.</li>
+<li>Laid groundwork for future compatibility with role-based chat models, expanding the API’s versatility.</li>
+<li>Enhanced control over modern language models, offering a superior alternative to traditional prompting and chaining.</li>
+<li>Utilized intuitive syntax based on Handlebars templating, ensuring a user-friendly experience.</li>
+<li>Enabled real-time interactions with Playground-like streaming in Jupyter/VSCode Notebooks.</li>
+<li>Seamlessly integrated with Hugging Face models, introducing features like guidance acceleration, token healing, and regex pattern guides.</li>
+<li>Emphasized model performance and precision, ensuring high-quality outputs and adherence to desired formats.</li>
+</ol>
+<p><a href="https://github.com/danikhan632/guidance">Link</a> <a href="https://github.com/danikhan632/guidance_api">Link</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="im">import</span> guidance</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co"># set the default language model used to execute guidance programs</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>guidance.llm <span class="op">=</span> guidance.llms.TWGUI(<span class="st">&quot;http://127.0.0.1:5000&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co"># define a guidance program that adapts a proverb</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>program <span class="op">=</span> guidance(<span class="st">&quot;&quot;&quot;Tweak this proverb to apply to model instructions instead.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="sc">{{</span><span class="st">proverb</span><span class="sc">}}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="st">- </span><span class="sc">{{</span><span class="st">book</span><span class="sc">}}</span><span class="st"> </span><span class="sc">{{</span><span class="st">chapter</span><span class="sc">}}</span><span class="st">:</span><span class="sc">{{</span><span class="st">verse</span><span class="sc">}}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="st">UPDATED</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="st">Where there is no guidance</span><span class="sc">{{</span><span class="st">gen &#39;rewrite&#39; stop=&quot;</span><span class="ch">\\</span><span class="st">n-&quot;</span><span class="sc">}}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="st">- GPT </span><span class="sc">{{</span><span class="st">#select &#39;chapter&#39;</span><span class="sc">}}</span><span class="st">9</span><span class="sc">{{</span><span class="st">or</span><span class="sc">}}</span><span class="st">10</span><span class="sc">{{</span><span class="st">or</span><span class="sc">}}</span><span class="st">11</span><span class="sc">{{</span><span class="st">/select</span><span class="sc">}}</span><span class="st">:</span><span class="sc">{{</span><span class="st">gen &#39;verse&#39;</span><span class="sc">}}</span><span class="st">&quot;&quot;&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="co"># execute the program on a specific proverb</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>executed_program <span class="op">=</span> program(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>    proverb<span class="op">=</span><span class="st">&quot;Where there is no guidance, a people falls,</span><span class="ch">\n</span><span class="st">but in an abundance of counselors there is safety.&quot;</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>    book<span class="op">=</span><span class="st">&quot;Proverbs&quot;</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>    chapter<span class="op">=</span><span class="dv">11</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>    verse<span class="op">=</span><span class="dv">14</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>)</span></code></pre></div>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/proverb_animation.gif" width="404"></p>
+<h2 id="autogpt-alpaca-trader-june-2023">AutoGPT-Alpaca-Trader June 2023</h2>
+<ol type="1">
+<li><p><strong>Innovative Plugin Development</strong>: Spearheaded the design and implementation of a cutting-edge AutoGPT plugin, seamlessly integrating the GPT-4 powered AutoGPT application with Alpaca Trading API to augment algorithmic trading strategies with advanced AI capabilities.</p></li>
+<li><p><strong>API Integration and Security</strong>: Expertly established secure and efficient connections to Alpaca’s Trading API, enabling robust trade execution, account management, and real-time data retrieval functionalities, while ensuring data integrity and compliance with industry best practices.</p></li>
+<li><p><strong>Enhanced Trade Management</strong>: Developed a comprehensive suite of tools for the automated placement, modification, and cancellation of diverse stock and ETF orders, including market, limit, and stop orders, resulting in a streamlined trading experience and improved operational efficiency.</p></li>
+<li><p><strong>Account and Portfolio Management</strong>: Implemented advanced features for real-time monitoring and management of user account details, portfolio positions, and transaction history, delivering a holistic view of financial assets and enhancing user decision-making.</p></li>
+<li><p><strong>Market Data and Risk Management</strong>: Provided traders with access to vital real-time and historical market data, including stock quotes and bar data, as well as corporate action insights, complemented by a robust paper trading environment for strategy testing and risk mitigation.</p></li>
+</ol>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/stocks.gif" width="404"></p>
+<h2 id="autogpt-messages-may-2023">AutoGPT Messages: May 2023</h2>
+<ol type="1">
+<li>Developed the AutoGPT plugin for iMessages, enabling seamless integration with AI-powered messaging across multiple platforms, ensuring user data privacy and security.</li>
+<li>Implemented a Python server backend, allowing the plugin to operate universally while maintaining a dedicated Mac server for core functionalities.</li>
+<li>Streamlined the installation process with cross-platform support, providing detailed instructions for Linux, Mac, Windows, and WSL environments.</li>
+<li>Enhanced user experience by integrating with the iMessage API and providing options for public accessibility using tools like tunnelto and ngrok.</li>
+<li>Designed a user-friendly interface with real-time notifications, customizable settings, and integration capabilities with other communication tools for comprehensive messaging solutions.</li>
+</ol>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/auto.gif" width="704"></p>
+<p><a href="https://github.com/danikhan632/Auto-GPT-Messages-Plugin">Github Page</a></p>
+<h2 id="autogpt-local-infrence-server-may-2023">AutoGPT Local Infrence Server: May 2023</h2>
+<ol type="1">
+<li>Developed the Auto-GPT-Text-Gen-Plugin to enable users to fully customize prompts for integration with locally installed large language models (LLMs), facilitating a shift away from dependency on GPT-4 and GPT 3.5.</li>
+<li>Implemented a robust connection to Text Generation WebUI, serving as an API gateway for various models, which streamlines the process of managing complex configurations and environment settings.</li>
+<li>Provided comprehensive documentation and a step-by-step installation guide, ensuring users can effortlessly download, configure, and utilize the plugin with their specific text generation setup.</li>
+<li>Integrated flexibility for model selection and the ability to tweak generation parameters such as top_p, top_k, and repetition_penalty through environmental variables, enhancing user control over text generation outcomes.</li>
+<li>Encapsulated API interactions and prompt management within the TextGenPluginController class, laying the groundwork for potential future expansions to support multiple APIs, thereby ensuring long-term maintainability and scalability of the plugin.</li>
+</ol>
+<p><a href="https://github.com/danikhan632/Auto-GPT-Text-Gen-Plugin">Github Page</a></p>
+<h2 id="imessages-api-may-2023">iMessages API: May 2023</h2>
+<ol type="1">
+<li>Developed a Flask-based API to interact with iMessage, enabling users to send and retrieve messages as well as fetch recent contacts, enhancing communication automation.</li>
+<li>Implemented secure access to the API by creating a custom decorator function that validates API keys, ensuring secure and authenticated interactions.</li>
+<li>Orchestrated background data synchronization using threading, allowing for real-time updates of messages while maintaining a responsive API service.</li>
+<li>Integrated iMessage reader and AppleScript for seamless message sending and retrieval, showcasing strong cross-technology integration skills.</li>
+<li>Designed a user-friendly setup process, including environment variable configuration and easy-to-follow instructions, improving the accessibility of the API for end users.</li>
+</ol>
+<p><a href="https://github.com/danikhan632/iMessage-API">Github Page</a></p>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/chat.gif" width="704"></p>
+<h2 id="buzzos-january-2023">BuzzOS: January 2023</h2>
+<p>BuzzOS is an Operating System built for the Intel/AMD x86_64 architecture using assembly and Rust. The operating system includes a Graphical User Interface (GUI) and is designed to provide a complete user experience.</p>
+<p>The operating system includes user space and a mechanism for user-level processes to perform system calls to the kernel. This allows users to run applications and perform various tasks on the system.</p>
+<p>BuzzOS also includes drivers for various hardware components, including the keyboard, mouse, timer, disk, and Intel PIC 8259. These drivers enable a robust input experience and ensure that the operating system can communicate effectively with various hardware components.</p>
+<p>In addition to the core operating system functionality, BuzzOS also includes a fully functional desktop interface with games and system apps. This interface provides users with a familiar and intuitive environment for interacting with the operating system.</p>
+<p>Overall, BuzzOS is an impressive project that demonstrates the power and flexibility of modern operating systems. By leveraging assembly and Rust, the project was able to create a complete operating system with a GUI and a range of drivers and applications. This is a significant achievement and represents a valuable contribution to the field of operating systems. <a href="https://github.com/JVKdouk/BuzzOS">Github Page</a></p>
+<h2 id="path-finding-robot-october-2022">Path-finding Robot: October 2022</h2>
+<ul>
+<li>Developed proficiency in Robotics and Computer Vision through implementing the Rapidly-exploring Random Tree (RRT) algorithm, enhancing path planning efficiency in autonomous robotic navigation.</li>
+<li>Leveraged Computer Vision techniques to enable real-time object detection and environment mapping, optimizing robot’s perception and decision-making capabilities.</li>
+<li>Designed and executed algorithms for image processing and feature extraction, significantly improving the accuracy of object recognition in varied lighting and environmental conditions.</li>
+<li>Employed state-of-the-art machine learning models for image captioning, translating visual data into descriptive language, and enhancing human-robot interaction.</li>
+<li>Demonstrated strong problem-solving skills in Robotics by handling exceptions such as VectorTimeoutException, ensuring seamless operation and reliability of robotic systems.</li>
+</ul>
+<p><a href="https://github.com/danikhan632/robot-path-finder">Github Page</a></p>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/path.gif" width="604"></p>
+<h2 id="flutter-tower-defense-game-april-2022">Flutter Tower Defense Game: April 2022</h2>
+<p>Designed and developed a tower defense game using the Flutter framework.</p>
+<ul>
+<li>Implemented game mechanics including tower placement, enemy spawning, and pathfinding using the Dart programming language.</li>
+<li>Utilized Flutter’s built-in animation framework to create smooth and visually appealing animations for tower attacks and enemy movements.</li>
+<li>Integrated Google Firebase for user authentication and cloud storage to save game progress and scores.</li>
+<li>Takes advantage of Flutter’s cross-platform nature, allowing it to run on iOS, Android, Mac, Windows, Linux, and Web.</li>
+<li>Collaborated with a team of developers and designers to ensure timely delivery and a high-quality end product.</li>
+</ul>
+<p><a href="https://github.com/danikhan632/tower_defense_game">Github Page</a></p>
+<p>You can play the game <a href="https://tower-defense-d8435.web.app/#/">here</a>.</p>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/tower_def.gif" width="804"></p>
+<h2 id="covid-vaccine-tracker-february-2021">COVID Vaccine Tracker: February 2021</h2>
+<p>The COVID Vaccine Tracker is a tool for predicting the progress of COVID-19 vaccinations across US states. It uses data from vaccine databases and factors in state population to estimate when each state will reach an 80% vaccination rate. The project was created in March of 2021 but could potentially be modified for use with the Delta variant of COVID-19.</p>
+<p>The model used in the project is based on a logarithmic curve. It provided fairly accurate predictions until the 50% vaccination mark but did not accurately predict the curve going logarithmic at that point. Despite this limitation, the tool still provides valuable insights into the progress of vaccinations across different US states.</p>
+<p><a href="">Github Page</a></p>
+<p>https://github.com/danikhan632/tower_defense_game</p>
+<h2 id="create-c-app-november-2022">Create C++ App: November 2022</h2>
+<p>Create-Cpp-App is a Command Line Interface (CLI) tool that provides an npm-like experience for building C++ applications. The tool is designed to streamline the process of building C++ apps by automating many of the repetitive and time-consuming tasks that developers typically face.</p>
+<p>The tool is built to be intuitive and user-friendly, and it generates makefiles and automatically updates CMake files for a fast and efficient development experience. This allows developers to focus on writing code instead of worrying about the build process.</p>
+<p>Create-Cpp-App also includes a range of built-in testing, address sanitization, benchmarking, and other tools for building production-ready C++ applications. These tools are designed to help developers ensure that their code is of high quality and performance.</p>
+<p>Overall, Create-Cpp-App is an innovative tool that helps simplify the process of building C++ applications. By providing an npm-like experience, the tool makes it easy for developers to get started with building C++ apps and reduces the time and effort required to build high-quality, production-ready applications.</p>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/cpp.gif" width="804"></p>
+<p><a href="https://github.com/danikhan632/create-cpp-app">Github Page</a></p>
+<h2 id="clean-up-crew-october-2022">Clean Up Crew: October 2022</h2>
+<p>Clean Up Crew is a web application that serves as a platform for connecting small communities with local businesses. The application was built using Next.js, MongoDB, AWS S3, Google Maps API, and ReactJS.</p>
+<p>The platform allows users to create and interact with posts in a given area. Users can post about community events, local businesses, and other topics related to their community. The application includes a sorting algorithm based on various factors such as location, user interaction, and other metrics to ensure that the most relevant content is displayed to users.</p>
+<p>The project was developed by a team of programmers who participated in a programming competition. Over a period of 36 hours, the team worked on developing the application and implementing its various features. After the competition, the team was awarded 13th place out of 191 teams, which is a testament to their hard work and the effectiveness of the application they developed.</p>
+<p>Overall, this project represents a valuable contribution to small communities looking to improve their localities and small businesses seeking new opportunities. The platform provides a means for these groups to connect and collaborate, and the sorting algorithm ensures that the most relevant content is displayed to users. By utilizing modern web technologies and APIs, the platform is able to provide a seamless and user-friendly experience for its users.</p>
+<h2 id="self-driving-car-january-2021">Self-Driving-Car: January 2021</h2>
+<p>The Self-Driving Car project is a machine learning project that aims to simulate the behavior of a self-driving car using a Convolutional Neural Network (CNN) and computer vision techniques. The project involves constructing a virtual environment where a car can be driven autonomously using machine learning algorithms.</p>
+<p>The CNN is used to determine the speed and angle of rotation of the simulated vehicle based on data obtained from a virtual camera. The camera captures images of the environment and feeds them into the CNN, which processes the data and outputs a prediction for the vehicle’s next move. The CNN is trained using a dataset of labeled images and their corresponding speed and steering angles.</p>
+<p>To implement the CNN, the project utilizes a number of machine learning libraries, including Tensorflow, Keras, and NumPy. These libraries provide a range of tools for developing, training, and testing machine learning models, as well as tools for processing and analyzing large datasets.</p>
+<p>The project also includes a testing environment where the performance of the self-driving car can be evaluated. This environment allows the user to adjust parameters such as the speed and complexity of the environment, and to observe how the car responds to different scenarios.</p>
+<p>Overall, the Self-Driving Car project represents an exciting application of machine learning and computer vision techniques to the field of autonomous vehicles. By simulating the behavior of a self-driving car in a virtual environment, the project provides a safe and scalable platform for testing and developing new algorithms and techniques for autonomous driving.</p>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/self_car.gif" width="804"></p>
+<p><a href="https://github.com/danikhan632/Self-Driving-Car">Github Page</a></p>
+<h2 id="amazon-shopping-clone-december-2020">Amazon-Shopping Clone: December 2020</h2>
+<p>The Amazon Shopping Clone is a web application built using the MERN stack (MongoDB, Express, React, and Node.js) and Stripe API. It mimics the design and user interface of the Amazon.com website, allowing users to browse and purchase products in a familiar environment.</p>
+<p>One of the key features of the application is its login system, which allows users to create accounts and securely store their personal and payment information. This information is stored using MongoDB, a NoSQL database that provides a flexible and scalable data storage solution.</p>
+<p>In addition to the login system, the application also utilizes the Stripe API to handle transactions in a secure and scalable manner. Stripe is a popular payment processing platform that provides a wide range of features for online businesses, including secure payment processing, subscription management, and fraud detection.</p>
+<p>To ensure a smooth and intuitive user experience, the application implements a design language that closely mimics that of the Amazon.com website. This includes a consistent color scheme, typography, and layout, as well as familiar user interface elements such as navigation menus, search bars, and product listings.</p>
+<p>Overall, the Amazon Shopping Clone provides a robust and scalable platform for online shopping that combines the familiarity and convenience of Amazon.com with the security and scalability of modern web technologies. <a href="https://github.com/danikhan632/tower_defense_game">Github Page</a></p>
+<p>You can access the live demo of the <strong>FakeBlock Shopping</strong> project <a href="https://fakeblock-shopping.web.app/">here</a></p>
+<p><img src="https://hackgtstoragebucket.s3.amazonaws.com/amzn.gif" width="990"></p>

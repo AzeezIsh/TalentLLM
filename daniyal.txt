@@ -1,0 +1,56 @@
+Daniyal - Software Engineer
+{
+DH
+}
+Hey there, I'm
+Daniyal Hussain
+Digital Craftsman
+- a software engineer, data scientist, full-stack dev, and more.
+📚
+Graduated with a B.A. in
+Computer Science
+&
+Data Science
+@
+NYU
+.
+🚀
+Looking for fulltime roles!
+Github
+LinkedIn
+Email
+⚡ About Me
+I'm a computer scientist based in NYC with an avid interest in interdisciplinary learning. My mindset is perfectly embodied by this quote from Naval Ravikant:
+"Learn to sell, learn to build - if you can do both, you will be unstoppable."
+My specialties lie in developing desktop applications, fullstack websites, machine learning, and making it all visually stunning.
+I am currently working on Resyzer - a SaaS windows desktop application which takes window management to the next level.
+Projects
+See all projects →
+Here are a couple of the things I've worked on.
+See all projects →
+NYU Course Tracker
+JavaScript
+Puppeteer
+Utilises puppeteer to scrape the NYU public course search via a headless browser for the desired class and check its status. Manipulates user agent randomly to avoid detection. Sends an alert via telegram when the class status changes.
+KeyboardHookLite
+C#
+win32
+A lightweight low-level global windows keyboard hook compatible with modern UI frameworks (WPF, MAUI, WinUI 3, etc.)
+React Blackjack
+React
+mongoDB
+Express
+Node.js
+Passport
+A blackjack app built with react. Supports user authentication. Your balance and game history are preserved. Implemented in react, node.js, passport, mongoDB.
+Get In Touch!
+LinkedIn
+Email
+Resume
+Built with
+Next.js
+&
+Chakra UI
+. Hosted on
+Vercel
+.
