@@ -4,6 +4,7 @@ from Candidate import JobCandidate
 from dotenv import load_dotenv
 from compator import bubble_sort
 from results import writeToSheets
+from resume_conversation import chat_with_candidate
 sa = gspread.service_account(filename='service_creds.json')
 sh = sa.open("Figma_swe")
 load_dotenv()
@@ -15,23 +16,28 @@ data = wks.get_all_values()
 # Load environment variables from the .env file
 load_dotenv()
 # destination_path = os.path.join(os.getcwd(), id)
-NotList=['sasad3@gatech.edu','saad.mufti@mit.edu']
+
 candidates=[]
 
-os.environ['COMPARATOR_LLM']="palm/chat-bison"
-for i in range(1, 6):
+# os.environ['COMPARATOR_LLM']="chat-bison"
+os.environ['COMPARATOR_LLM']="gpt-3.5-turbo-1106"
+for i in range(1, 7):
     candid =JobCandidate(data[i])
-    if candid.email not in NotList:
-        candidates.append(candid)
+    candidates.append(candid)
 
-random.shuffle(candidates)
+# random.shuffle(candidates)
 sort_cand = bubble_sort(candidates)
-for candidate in sort_cand:
-    print(candidate.email)
 
+writeToSheets(candidates)
 
-# writeToSheets(candidates)
+for idx, candidate in enumerate(sort_cand):
+    print(str(idx) + '. ' + candidate.email)
 
+print('Select a candidate to chat with. Type in their index number. Type -1 if you dont want to chat.')
+idx = int(input())
+if idx != -1:
+    selected_candidate = candidates[idx]
+    chat_with_candidate(selected_candidate)
 
 # for candidate in candidates:
 #     print(candidate)

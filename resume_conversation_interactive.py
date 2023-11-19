@@ -6,22 +6,6 @@ from litellm import completion
 from mathpix import extract_text
 import gradio as gr
 
-def chat_with_resume(model, resume_location):
-    resume_mmd = extract_text(resume_location)
-    chat_history = ''
-    print('You are now chatting with the resume ' + resume_location + '. Type in your question or type QUIT to stop.')
-    while True:
-        print('User:')
-        question = input()
-        print('\n')
-        if question.strip().upper() == 'QUIT':
-            break
-        prompt = get_prompt(resume_mmd, chat_history, question)
-        messages = [{ 'content': prompt, 'role': 'user'}]
-        response = completion(model = model, messages = messages)['choices'][0]['message']['content']
-        print('Response:\n' + response + '\n\n')
-        chat_history += 'User:\n' + question + '\nResponse:\n' + response
-
 model = 'chat-bison'
 resume_location = 'resume_pdfs/1BXAuw6f1rDF05P734y_O7K8fYwgDVZvV.pdf'
 resume_mmd = extract_text((resume_location))

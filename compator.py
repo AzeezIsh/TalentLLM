@@ -2,7 +2,8 @@ import openai;
 import json, os,sys
 from dotenv import load_dotenv
 load_dotenv()
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+# openai.api_key = os.environ.get("OPENAI_API_KEY")
+import openai; openai.api_key = "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"
 from Candidate import JobCandidate
 
 
@@ -30,21 +31,24 @@ def printc(obj, color="cyan"):
 
 LLM=os.environ.get("COMPARATOR_LLM","chat-bison")
 # LLM=os.environ.get("COMPARATOR_LLM","gpt-3.5-turbo-1106")
-def getContent(resumeA: str, resumeB: str) -> str:
+def getContent(candidateA, candidateB) -> str:
     return (
         "Given the following two candidates, choose between the two. Here is the rubric: "
         + get_rubric()
         + "Candidate A: "
-        + "\nRESUME:\n" +resumeA+"\nEND Resume\n"
+        + "\nRESUME:\n" +candidateA.resume_text+"\nEND Resume\n"
+        + "\nGITHUB:\n" +candidateA.github_text+"\nEND GITHUB\n"
         + " END OF Candidate A"
         + "\n\nCandidate B: "
-        + "\nRESUME:\n" +resumeB+"\nEND Resume\n"
+        + "\nRESUME:\n" +candidateB.resume_text+"\nEND Resume\n"
+        + "\nGITHUB:\n" +candidateB.github_text+"\nEND GITHUB\n"
         + " END OF Candidate B"
+
     )
 
 
 
-def compare_resumes(content:str, nameA="", nameB=""):
+def google_compare_resumes(content:str, nameA="", nameB=""):
     choice =0
     messages=[
         {"role": "user", "content": "You are an LLM recrutier who will choose between two candidates based on an provided rubric"},
@@ -64,7 +68,7 @@ def compare_resumes(content:str, nameA="", nameB=""):
         {"role": "user", "content": content}
         ]
 
-    response =completion(model=LLM, messages=messages,max_tokens=90,)
+    response =completion(model=LLM, messages=messages,max_tokens=170,)
     printc(response["choices"][0]["message"],'red')
 
     messages=[
@@ -100,6 +104,88 @@ def compare_resumes(content:str, nameA="", nameB=""):
     return choice
     
 
+def compare_resumes(content:str, nameA="", nameB=""):
+    retries = 3
+    choice = 0
+
+    while retries > 0:
+        try:
+            response = openai.ChatCompletion.create(
+                model='gpt-4-0613',
+                messages=[
+        {"role": "user", "content":         
+            """
+            You are an LLM recrutier who will choose between two candidates based on an provided rubric,
+            you will only use bullet point and broken english instead of proper english to be more concise in your justification
+            You will also provide args for selectCandidate
+            """
+        },
+        {"role": "assistant", "content":         
+            """
+            I can assist you in evaluating two candidates based on a provided rubric. 
+            Provide me with the rubric or the criteria you'd like to use for the evaluation, 
+            and I'll help you assess the candidates accordingly and explain myself conscisely and will
+            provide args for selectCandidate
+            """
+        },
+        {"role": "user", "content": content}
+
+                ],
+                functions=[
+                    {
+                        "name": "selectCanidate",
+                        "description": "choose between the two canidates",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "choice_num": {
+                                    "type": "integer",
+                                    "description": "1 for Candidate A is the best fit, 2 for Candidate B is the best fit",
+                                    "required": ["choice_num"],
+                                },
+                                "justifcation": {
+                                    "type": "string",
+                                    "description": "justifcation for why you chose the candidate",
+                                    "required": ["justifcation"],
+                                },
+                            }
+                        },
+                    }
+                ],
+                function_call="auto",
+            )
+
+            message = response["choices"][0]["message"]
+
+            if message.get("function_call"):
+                function_name = message["function_call"]["name"]
+                function_args = json.loads(message["function_call"]["arguments"])
+                choice = (int(function_args["choice_num"]))
+
+                if function_name == "selectCanidate":
+                    if choice == 1:
+                        choice = -1
+                        printc(nameA+" wins over "+nameB, "cyan")
+                    elif choice == 2:
+                        choice = 1
+                        printc(nameB+" wins over "+nameA, "green")
+
+                    printc(function_args["justifcation"], "yellow")
+
+            break  # Break the loop if everything went well
+
+        except Exception as e:
+            printc("Error: " + str(e), "red")
+            retries -= 1
+            if retries == 0:
+                printc("Maximum retries reached.", "red")
+                return 0  # Or any other default value or error indicator
+
+    return choice
+
+    
+
+
 def get_rubric():
     text = open("rubric.txt","r").read()
     return "\nRubric:\n" +str(text)+"\nEND Rubric\n"
@@ -125,7 +211,7 @@ def comp(candidateA:JobCandidate, candidateB:JobCandidate, rub_id:int=0 ) -> int
         elif comp_table[inv_tag]==-1:
             printc(candidateB.name+" wins over "+candidateA.name,"magenta")
     else:
-        choice = compare_resumes(getContent(candidateA.resume_text, candidateB.resume_text), candidateA.name, candidateB.name)   
+        choice = compare_resumes(getContent(candidateA, candidateB), candidateA.name, candidateB.name)   
         comp_table[tag]=choice
         comp_table[inv_tag]=choice*-1
 
@@ -133,19 +219,16 @@ def comp(candidateA:JobCandidate, candidateB:JobCandidate, rub_id:int=0 ) -> int
         return choice
 
 
+def compute_scores(candidates):
+    scores = {candidate.email: 0 for candidate in candidates}
+    for i, candidateA in enumerate(candidates):
+        for candidateB in candidates[i+1:]:
+            result = comp(candidateA, candidateB)
+            scores[candidateA.email] += result
+            scores[candidateB.email] -= result
+    print(scores)
+    return scores
+
 def bubble_sort(candidates: list) -> list:
-    n = len(candidates)
-    for i in range(n):
-        swapped = False
-        for j in range(0, n-i-1):
-            if candidates[j].email == candidates[j+1].email:
-                continue
-            elif comp(candidates[j], candidates[j+1]) > 0:
-                candidates[j], candidates[j+1] = candidates[j+1], candidates[j]
-                swapped = True
-        if not swapped:
-            break
-
-
-    return candidates
-
+    scores = compute_scores(candidates)
+    return sorted(candidates, key=lambda x: scores[x.email])

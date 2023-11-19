@@ -1,19 +1,15 @@
 
+ 
+ NOTE this rubric is not in any particular order 
+ 
  Educational Background
 PLEASE ONLY CONSIDER THEIR LATEST universities NOT EARLIER ONES
 Degree Level
- Work Experience (Assessed from BS Graduation Date)
-- Open-source Contributions, Research, and Personal Projects:
-  - Personal Projects
-  - Contributions to Open-source
-  - Research Publications
-project Experience
+Work Experience (Assessed from BS Graduation Date)
+-Open-source Contributions, Research, and Personal Projects:
 - Project Scale and Complexity:
   - Large-scale, High-impact Projects
   - Mid-sized Projects
   - Small Projects or Academic Assignments
-- Relevance to the Role:
-  - Directly Related
-  - Partially Related
-  - Unrelated
+- Relevance to the Role
 

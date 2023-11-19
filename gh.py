@@ -84,54 +84,56 @@ def get_repositories(username: str)->List[Repository]:
 
 
 def getBasicReport(username: str):
-    user_repos = get_repositories(username)[:8]
-    summaries=[]
+    try:
+        user_repos = get_repositories(username)[:8]
+        summaries=[]
 
 
-    for repo in user_repos:
+        for repo in user_repos:
+            
+            try:
+                content = ""
+                content+="\nNAME: "+str(repo.full_name)+"\nSTARS: "+str(repo.stargazers_count)+"\nReadme: \n"
+                files = repo.get_contents("")
+                md_files = [file for file in files if file.name.endswith('.md')]
+
         
-        try:
-            content = ""
-            content+="\nNAME: "+str(repo.full_name)+"\nSTARS: "+str(repo.stargazers_count)+"\nReadme: \n"
-            files = repo.get_contents("")
-            md_files = [file for file in files if file.name.endswith('.md')]
+                md_file_content = repo.get_contents(md_files[0].path).decoded_content.decode()
 
-    
-            md_file_content = repo.get_contents(md_files[0].path).decoded_content.decode()
-
-            content+= str(remove_html_and_urls(str(md_file_content)))
+                content+= str(remove_html_and_urls(str(md_file_content)))
 
 
 
-            messages=[
-                {"role": "user", "content": "I want you to summarize this repository and summarize the skills gained with this repository  "},
-                {"role": "assistant", "content":         
-                    """
-                    Sure, I can help with that! Please provide me with the details for the repo and I'll be able to summarize it and outline the skills that can be gained from it.
-                    Additonally I will grade the techinal complexity with it. I will also greatly take into consideration the Number of stars. Furthermore I Will use broken english to ensure
-                    my statements are as short and concise as possible
-                    """
-                },
-                {"role": "user", "content": content}
-                ]
+                messages=[
+                    {"role": "user", "content": "I want you to summarize this repository and summarize the skills gained with this repository  "},
+                    {"role": "assistant", "content":         
+                        """
+                        Sure, I can help with that! Please provide me with the details for the repo and I'll be able to summarize it and outline the skills that can be gained from it.
+                        Additonally I will grade the techinal complexity with it. I will also greatly take into consideration the Number of stars. Furthermore I Will use broken english to ensure
+                        my statements are as short and concise as possible
+                        """
+                    },
+                    {"role": "user", "content": content}
+                    ]
 
-            response =completion(model="anthropic.claude-instant-v1", messages=messages,max_tokens=150,temperature=1.0)
-            summaries.append(response["choices"][0]["message"]['content'])
+                response =completion(model="anthropic.claude-instant-v1", messages=messages,max_tokens=150,temperature=1.0)
+                summaries.append(response["choices"][0]["message"]['content'])
 
-        except:
-            continue
-
-
-    # message = completion(model="anthropic.claude-instant-v1", messages=messages)
-
-    return summaries
+            except:
+                continue
 
 
+        # message = completion(model="anthropic.claude-instant-v1", messages=messages)
+        printc(summaries,'cyan')
+
+        
+
+
+        return summaries
+    except:
+        return ""
 
 
 
-
-
-print(getBasicReport(username='taliu02'))
 
 
